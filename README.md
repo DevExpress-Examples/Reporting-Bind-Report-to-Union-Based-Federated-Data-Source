@@ -10,7 +10,7 @@ You can create a federated data source to display data combined from several sou
 
 ## Files to Review
 
-- [Form1.cs](CS\Reporting-Bind-Report-to-Union-Based-Federated-Data-Source\Form1.cs) (VB: [Form1.vb](VB\Reporting-Bind-Report-to-Union-Based-Federated-Data-Source\Form1.vb))
+- [Form1.cs](CS/Reporting-Bind-Report-to-Union-Based-Federated-Data-Source/Form1.cs) (VB: [Form1.vb](VB/Reporting-Bind-Report-to-Union-Based-Federated-Data-Source/Form1.vb))
 
 
 ## Documentation

@@ -1,13 +1,21 @@
 using System;
 using System.Windows.Forms;
+#region usings_sql
 using DevExpress.DataAccess.ConnectionParameters;
 using DevExpress.DataAccess.Sql;
+#endregion
+#region using_datafederation
 using DevExpress.DataAccess.DataFederation;
+#endregion
+#region using_excel
 using DevExpress.DataAccess.Excel;
 using System.IO;
+#endregion
+#region usings_report
 using System.ComponentModel;
 using System.Drawing;
 using DevExpress.XtraReports.UI;
+#endregion
 
 namespace BindReportToFederatedUnionQuery {
     public partial class Form1 : Form {
@@ -15,9 +23,12 @@ namespace BindReportToFederatedUnionQuery {
             InitializeComponent();
         }
         void Button1_Click(object sender, EventArgs e) {
+            #region ShowDesigner
             ReportDesignTool designTool = new ReportDesignTool(CreateReport());
             designTool.ShowRibbonDesignerDialog();
+            #endregion
         }
+        #region CreateFederationDataSource
         static FederationDataSource CreateFederationDataSource(SqlDataSource sql, ExcelDataSource excel) {
             // Create a federated query's SQL and Excel sources.
             Source sqlSource = new Source(sql.Name, sql, "Customers");
@@ -45,6 +56,8 @@ namespace BindReportToFederatedUnionQuery {
 
             return federationDataSource;
         }
+        #endregion
+        #region CreateReport
         public static XtraReport CreateReport() {
             // Create a new report.
             var report = new XtraReport();
@@ -72,14 +85,17 @@ namespace BindReportToFederatedUnionQuery {
 
             return report;
         }
+        #endregion
+        #region CreateSqlDataSource
         static SqlDataSource CreateSqlDataSource() {
-            var connectionParameters = new Access97ConnectionParameters(Path.Combine(Path.GetDirectoryName(typeof(Form1).Assembly.Location), "Data/nwind.mdb"), "", "");
-            var sqlDataSource = new SqlDataSource(connectionParameters) { Name = "Sql_Customers" };
+            var connectionParameters = new SQLiteConnectionParameters("Data/nwind.db", null); var sqlDataSource = new SqlDataSource(connectionParameters) { Name = "Sql_Customers" };
             var categoriesQuery = SelectQueryFluentBuilder.AddTable("Customers").SelectAllColumnsFromTable().Build("Customers");
             sqlDataSource.Queries.Add(categoriesQuery);
             sqlDataSource.RebuildResultSchema();
             return sqlDataSource;
         }
+        #endregion
+        #region CreateExcelDataSource
         static ExcelDataSource CreateExcelDataSource() {
             var excelDataSource = new ExcelDataSource() { Name = "Excel_Suppliers" };
             excelDataSource.FileName = Path.Combine(Path.GetDirectoryName(typeof(Form1).Assembly.Location), "Data/Suppliers.xlsx");
@@ -89,5 +105,6 @@ namespace BindReportToFederatedUnionQuery {
             excelDataSource.RebuildResultSchema();
             return excelDataSource;
         }
+        #endregion
     }
 }
